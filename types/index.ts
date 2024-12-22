@@ -3,8 +3,14 @@ export interface Student {
   name: string;
   cohort: string;
   courses: {
-    science: boolean;
-    math: boolean;
+    cbse9: {
+      science: boolean;
+      math: boolean;
+    };
+    cbse10: {
+      science: boolean;
+      math: boolean;
+    };
   };
   date_joined: string;
   last_login: string;

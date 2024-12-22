@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { BookOpen, Calculator } from 'lucide-react';
 import { StudentActions } from './StudentActions';
 import { EditStudentDialog } from './EditStudentDialog';
+import { CoursesBadges } from './CoursesBadges';
 
 export function StudentTable() {
   const { students, setStudents } = useStudentStore();
@@ -60,27 +61,14 @@ export function StudentTable() {
               <TableCell className="font-medium">{student.name}</TableCell>
               <TableCell>{student.cohort}</TableCell>
               <TableCell>
-                <div className="flex space-x-2">
-                  {student.courses.science && (
-                    <Badge variant="secondary">
-                      <BookOpen className="mr-1 h-3 w-3" />
-                      CBSE 9 Science
-                    </Badge>
-                  )}
-                  {student.courses.math && (
-                    <Badge variant="secondary">
-                      <Calculator className="mr-1 h-3 w-3" />
-                      CBSE 9 Math
-                    </Badge>
-                  )}
-                </div>
+                <CoursesBadges courses={student.courses} />
               </TableCell>
               <TableCell>{new Date(student.date_joined).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(student.last_login).toLocaleDateString()}</TableCell>
               <TableCell>
                 <Badge
                   variant={student.status === 'active' ? 'success' : 'destructive'}
-                  className="capitalize"
+                  className="h-3 w-3 rounded-full capitalize"
                 >
                   <StatusDot status={student.status} />
                   {/* {student.status} */}

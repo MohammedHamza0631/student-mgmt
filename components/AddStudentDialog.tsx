@@ -31,7 +31,11 @@ export function AddStudentDialog() {
   const [name, setName] = useState('');
   const [cohort, setCohort] = useState('AY 2024-25');
   const [class_, setClass] = useState('CBSE 9');
-  const [courses, setCourses] = useState({ science: false, math: false });
+  const [courses, setCourses] = useState({
+    cbse9: { science: false, math: false },
+    cbse10: { science: false, math: false }
+  });
+
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
   const addStudent = useStudentStore((state) => state.addStudent);
 
@@ -49,7 +53,11 @@ export function AddStudentDialog() {
       addStudent(newStudent);
       setOpen(false);
       setName('');
-      setCourses({ science: false, math: false });
+      setCourses({
+        cbse9: { science: false, math: false },
+        cbse10: { science: false, math: false }
+      });
+
     } catch (error) {
       console.error('Failed to create student:', error);
     }
@@ -76,7 +84,7 @@ export function AddStudentDialog() {
               required
             />
           </div>
-          
+
           <div>
             <Label>Cohort</Label>
             <Select value={cohort} onValueChange={setCohort}>
@@ -109,28 +117,65 @@ export function AddStudentDialog() {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label>Courses</Label>
+          <div className="space-y-4">
+            <Label>CBSE 9 Courses</Label>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <Checkbox
-                  id="science"
-                  checked={courses.science}
+                  id="cbse9-science"
+                  checked={courses.cbse9.science}
                   onCheckedChange={(checked) =>
-                    setCourses((prev) => ({ ...prev, science: checked === true }))
+                    setCourses((prev) => ({
+                      ...prev,
+                      cbse9: { ...prev.cbse9, science: checked === true }
+                    }))
                   }
+
                 />
-                <Label htmlFor="science">CBSE 9 Science</Label>
+                <Label htmlFor="cbse9-science">CBSE 9 Science</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox
-                  id="math"
-                  checked={courses.math}
+                  id="cbse9-math"
+                  checked={courses.cbse9.math}
                   onCheckedChange={(checked) =>
-                    setCourses((prev) => ({ ...prev, math: checked === true }))
+                    setCourses((prev) => ({
+                      ...prev,
+                      cbse9: { ...prev.cbse9, math: checked === true }
+                    }))
+                  }
+
+                />
+                <Label htmlFor="cbse9-math">CBSE 9 Math</Label>
+              </div>
+            </div>
+            <Label>CBSE 10 Courses</Label>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="cbse10-science"
+                  checked={courses.cbse10.science}
+                  onCheckedChange={(checked) =>
+                    setCourses((prev) => ({
+                      ...prev,
+                      cbse10: { ...prev.cbse10, science: checked === true }
+                    }))
                   }
                 />
-                <Label htmlFor="math">CBSE 9 Math</Label>
+                <Label htmlFor="cbse10-science">CBSE 10 Science</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="cbse10-math"
+                  checked={courses.cbse10.math}
+                  onCheckedChange={(checked) =>
+                    setCourses((prev) => ({
+                      ...prev,
+                      cbse10: { ...prev.cbse10, math: checked === true }
+                    }))
+                  }
+                />
+                <Label htmlFor="cbse10-math">CBSE 10 Math</Label>
               </div>
             </div>
           </div>
