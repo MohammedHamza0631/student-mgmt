@@ -66,13 +66,9 @@ export function StudentTable() {
               <TableCell>{new Date(student.date_joined).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(student.last_login).toLocaleDateString()}</TableCell>
               <TableCell>
-                <Badge
-                  variant={student.status === 'active' ? 'success' : 'destructive'}
-                  className="h-3 w-3 rounded-full capitalize"
-                >
-                  <StatusDot status={student.status} />
-                  {/* {student.status} */}
-                </Badge>
+                {/* {student.status} */}
+                <StatusDot status={student.status} />
+                
               </TableCell>
               <TableCell>
                 <StudentActions student={student} onEdit={handleEdit} />

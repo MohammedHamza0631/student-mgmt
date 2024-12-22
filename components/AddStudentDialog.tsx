@@ -118,66 +118,74 @@ export function AddStudentDialog() {
           </div>
 
           <div className="space-y-4">
-            <Label>CBSE 9 Courses</Label>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="cbse9-science"
-                  checked={courses.cbse9.science}
-                  onCheckedChange={(checked) =>
-                    setCourses((prev) => ({
-                      ...prev,
-                      cbse9: { ...prev.cbse9, science: checked === true }
-                    }))
-                  }
+            {class_ === 'CBSE 9' ? (
+              <>
+                <Label>CBSE 9 Courses</Label>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="cbse9-science"
+                      checked={courses.cbse9.science}
+                      onCheckedChange={(checked) =>
+                        setCourses((prev) => ({
+                          ...prev,
+                          cbse9: { ...prev.cbse9, science: checked === true }
+                        }))
+                      }
 
-                />
-                <Label htmlFor="cbse9-science">CBSE 9 Science</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="cbse9-math"
-                  checked={courses.cbse9.math}
-                  onCheckedChange={(checked) =>
-                    setCourses((prev) => ({
-                      ...prev,
-                      cbse9: { ...prev.cbse9, math: checked === true }
-                    }))
-                  }
+                    />
+                    <Label htmlFor="cbse9-science">CBSE 9 Science</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="cbse9-math"
+                      checked={courses.cbse9.math}
+                      onCheckedChange={(checked) =>
+                        setCourses((prev) => ({
+                          ...prev,
+                          cbse9: { ...prev.cbse9, math: checked === true }
+                        }))
+                      }
 
-                />
-                <Label htmlFor="cbse9-math">CBSE 9 Math</Label>
-              </div>
-            </div>
-            <Label>CBSE 10 Courses</Label>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="cbse10-science"
-                  checked={courses.cbse10.science}
-                  onCheckedChange={(checked) =>
-                    setCourses((prev) => ({
-                      ...prev,
-                      cbse10: { ...prev.cbse10, science: checked === true }
-                    }))
-                  }
-                />
-                <Label htmlFor="cbse10-science">CBSE 10 Science</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="cbse10-math"
-                  checked={courses.cbse10.math}
-                  onCheckedChange={(checked) =>
-                    setCourses((prev) => ({
-                      ...prev,
-                      cbse10: { ...prev.cbse10, math: checked === true }
-                    }))
-                  }
-                />
-                <Label htmlFor="cbse10-math">CBSE 10 Math</Label>
-              </div>
-            </div>
+                    />
+                    <Label htmlFor="cbse9-math">CBSE 9 Math</Label>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <Label>CBSE 10 Courses</Label>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="cbse10-science"
+                      checked={courses.cbse10.science}
+                      onCheckedChange={(checked) =>
+                        setCourses((prev) => ({
+                          ...prev,
+                          cbse10: { ...prev.cbse10, science: checked === true }
+                        }))
+                      }
+                    />
+                    <Label htmlFor="cbse10-science">CBSE 10 Science</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="cbse10-math"
+                      checked={courses.cbse10.math}
+                      onCheckedChange={(checked) =>
+                        setCourses((prev) => ({
+                          ...prev,
+                          cbse10: { ...prev.cbse10, math: checked === true }
+                        }))
+                      }
+                    />
+                    <Label htmlFor="cbse10-math">CBSE 10 Math</Label>
+                  </div>
+                </div>
+              </>
+            )}
+
           </div>
 
           <div>
