@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useStudentStore } from '@/lib/store';
 import { fetchStudents } from '@/lib/api';
 import { Student } from '@/types';
+import StatusDot from './StatusDot';
 import {
   Table,
   TableBody,
@@ -81,7 +82,8 @@ export function StudentTable() {
                   variant={student.status === 'active' ? 'success' : 'destructive'}
                   className="capitalize"
                 >
-                  {student.status}
+                  <StatusDot status={student.status} />
+                  {/* {student.status} */}
                 </Badge>
               </TableCell>
               <TableCell>
