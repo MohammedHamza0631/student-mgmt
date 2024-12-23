@@ -29,9 +29,9 @@ export function Header() {
           </SheetContent>
         </Sheet>
 
-        <div className="hidden md:block text-2xl font-bold mr-8">Quyl.</div>
+        <div className="hidden md:block text-2xl font-bold mr-8"></div>
 
-        <div className="flex items-center space-x-4 flex-1">
+        <div className="flex items-center justify-around space-x-4 flex-1">
           <SearchBar />
           
           <div className="flex items-center space-x-4 ml-auto">

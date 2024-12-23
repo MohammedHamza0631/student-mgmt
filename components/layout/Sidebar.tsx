@@ -4,6 +4,7 @@ import { LayoutDashboard, Users, BookOpen, HelpCircle, BarChart2, Settings } fro
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
@@ -23,7 +24,7 @@ export function Sidebar({ className }: SidebarProps) {
 
   return (
     <div className={cn("bg-white w-full md:w-64 md:min-h-screen p-4", className)}>
-      <div className="text-2xl font-bold mb-8 px-4">Quyl.</div>
+      <div className="text-2xl font-bold mb-8 px-4"><Image src={'/logo.png'} alt='logo' width={80} height={10}/></div>
       <nav className="space-y-2">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
