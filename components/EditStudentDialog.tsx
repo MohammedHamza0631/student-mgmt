@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useStudentStore } from '@/lib/store';
 import { updateStudent } from '@/lib/api';
 import { Student } from '@/types';
+import { useStudentForm } from '@/hooks/useStudentForm';
 import {
   Dialog,
   DialogContent,
@@ -36,14 +37,20 @@ export function EditStudentDialog({
   open,
   onOpenChange,
 }: EditStudentDialogProps) {
-  const [name, setName] = useState(student?.name ?? '');
-  const [cohort, setCohort] = useState(student?.cohort ?? 'AY 2024-25');
-  const [class_, setClass] = useState('CBSE 9');
-  const [courses, setCourses] = useState(student?.courses ?? {
-    cbse9: { science: false, math: false },
-    cbse10: { science: false, math: false }
-  });
-  const [status, setStatus] = useState<'active' | 'inactive'>(student?.status ?? 'active');
+  const {
+    name,
+    setName,
+    cohort,
+    setCohort,
+    class_,
+    setClass,
+    courses,
+    setCourses,
+    status,
+    setStatus,
+    formData
+  } = useStudentForm(student || undefined);
+
   const { students, setStudents } = useStudentStore();
 
   useEffect(() => {
@@ -53,19 +60,14 @@ export function EditStudentDialog({
       setCourses(student.courses);
       setStatus(student.status);
     }
-  }, [student]);
+  }, [student, setName, setCohort, setCourses, setStatus]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!student) return;
 
     try {
-      const updatedStudent = await updateStudent(student.id, {
-        name,
-        cohort,
-        courses,
-        status,
-      });
+      const updatedStudent = await updateStudent(student.id, formData);
       setStudents(
         students.map((s) => (s.id === student.id ? updatedStudent : s))
       );
@@ -82,6 +84,7 @@ export function EditStudentDialog({
           <DialogTitle>Edit Student</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name field */}
           <div>
             <Label htmlFor="name">Student Name</Label>
             <Input
@@ -92,6 +95,7 @@ export function EditStudentDialog({
             />
           </div>
 
+          {/* Cohort field */}
           <div>
             <Label>Cohort</Label>
             <Select value={cohort} onValueChange={setCohort}>
@@ -108,6 +112,7 @@ export function EditStudentDialog({
             </Select>
           </div>
 
+          {/* Class field */}
           <div>
             <Label>Class</Label>
             <Select value={class_} onValueChange={setClass}>
@@ -124,75 +129,46 @@ export function EditStudentDialog({
             </Select>
           </div>
 
+          {/* Courses section */}
           <div className="space-y-4">
-            {class_ === 'CBSE 9' ? (
-              <>
-                <Label>CBSE 9 Courses</Label>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="cbse9-science"
-                      checked={courses.cbse9.science}
-                      onCheckedChange={(checked) =>
-                        setCourses((prev) => ({
-                          ...prev,
-                          cbse9: { ...prev.cbse9, science: checked === true }
-                        }))
+            <Label>{class_} Courses</Label>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={`${class_.toLowerCase()}-science`}
+                  checked={class_ === 'CBSE 9' ? courses.cbse9.science : courses.cbse10.science}
+                  onCheckedChange={(checked) =>
+                    setCourses((prev) => ({
+                      ...prev,
+                      [class_ === 'CBSE 9' ? 'cbse9' : 'cbse10']: {
+                        ...prev[class_ === 'CBSE 9' ? 'cbse9' : 'cbse10'],
+                        science: checked === true
                       }
-                    />
-                    <Label htmlFor="cbse9-science">CBSE 9 Science</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="cbse9-math"
-                      checked={courses.cbse9.math}
-                      onCheckedChange={(checked) =>
-                        setCourses((prev) => ({
-                          ...prev,
-                          cbse9: { ...prev.cbse9, math: checked === true }
-                        }))
+                    }))
+                  }
+                />
+                <Label htmlFor={`${class_.toLowerCase()}-science`}>{class_} Science</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={`${class_.toLowerCase()}-math`}
+                  checked={class_ === 'CBSE 9' ? courses.cbse9.math : courses.cbse10.math}
+                  onCheckedChange={(checked) =>
+                    setCourses((prev) => ({
+                      ...prev,
+                      [class_ === 'CBSE 9' ? 'cbse9' : 'cbse10']: {
+                        ...prev[class_ === 'CBSE 9' ? 'cbse9' : 'cbse10'],
+                        math: checked === true
                       }
-                    />
-                    <Label htmlFor="cbse9-math">CBSE 9 Math</Label>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <Label>CBSE 10 Courses</Label>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="cbse10-science"
-                      checked={courses.cbse10.science}
-                      onCheckedChange={(checked) =>
-                        setCourses((prev) => ({
-                          ...prev,
-                          cbse10: { ...prev.cbse10, science: checked === true }
-                        }))
-                      }
-                    />
-                    <Label htmlFor="cbse10-science">CBSE 10 Science</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="cbse10-math"
-                      checked={courses.cbse10.math}
-                      onCheckedChange={(checked) =>
-                        setCourses((prev) => ({
-                          ...prev,
-                          cbse10: { ...prev.cbse10, math: checked === true }
-                        }))
-                      }
-                    />
-                    <Label htmlFor="cbse10-math">CBSE 10 Math</Label>
-                  </div>
-                </div>
-              </>
-            )}
-
+                    }))
+                  }
+                />
+                <Label htmlFor={`${class_.toLowerCase()}-math`}>{class_} Math</Label>
+              </div>
+            </div>
           </div>
 
+          {/* Status field */}
           <div>
             <Label>Status</Label>
             <Select value={status} onValueChange={(value: 'active' | 'inactive') => setStatus(value)}>
