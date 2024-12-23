@@ -14,25 +14,29 @@ const sidebarItems = [
   { icon: Settings, label: 'Settings', href: '/settings' },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  className?: string;
+}
+
+export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:block w-64 bg-white border-r min-h-screen p-4">
+    <div className={cn("bg-white w-full md:w-64 md:min-h-screen p-4", className)}>
       <div className="text-2xl font-bold mb-8 px-4">Quyl.</div>
       <nav className="space-y-2">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
-          
+
           return (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center space-x-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                isActive 
-                  ? "bg-gray-100 text-gray-900" 
+                "flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-gray-100 text-gray-900"
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               )}
             >

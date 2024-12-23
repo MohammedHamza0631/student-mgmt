@@ -42,41 +42,44 @@ export function StudentTable() {
   };
 
   return (
-    <div className="rounded-lg border bg-white">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Student Name</TableHead>
-            <TableHead>Cohort</TableHead>
-            <TableHead>Courses</TableHead>
-            <TableHead>Date Joined</TableHead>
-            <TableHead>Last login</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="w-[50px]"></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {students.map((student) => (
-            <TableRow key={student.id}>
-              <TableCell className="font-medium">{student.name}</TableCell>
-              <TableCell>{student.cohort}</TableCell>
-              <TableCell>
-                <CoursesBadges courses={student.courses} />
-              </TableCell>
-              <TableCell>{new Date(student.date_joined).toLocaleDateString()}</TableCell>
-              <TableCell>{new Date(student.last_login).toLocaleDateString()}</TableCell>
-              <TableCell>
-                {/* {student.status} */}
-                <StatusDot status={student.status} />
-                
-              </TableCell>
-              <TableCell>
-                <StudentActions student={student} onEdit={handleEdit} />
-              </TableCell>
+    <div className="rounded-lg border bg-white overflow-hidden">
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Student Name</TableHead>
+              <TableHead>Cohort</TableHead>
+              <TableHead>Courses</TableHead>
+              <TableHead>Date Joined</TableHead>
+              <TableHead>Last login</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="w-[50px]"></TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {students.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell className="font-medium">{student.name}</TableCell>
+                <TableCell>{student.cohort}</TableCell>
+                <TableCell>
+                  <CoursesBadges courses={student.courses} />
+                </TableCell>
+                <TableCell>{new Date(student.date_joined).toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(student.last_login).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {/* {student.status} */}
+                  <StatusDot status={student.status} />
+
+                </TableCell>
+                <TableCell>
+                  <StudentActions student={student} onEdit={handleEdit} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
       <EditStudentDialog
         student={editingStudent}
         open={isEditDialogOpen}

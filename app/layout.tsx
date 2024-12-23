@@ -20,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex min-h-screen">
-          <Sidebar />
+          <div className="hidden md:block">
+            <Sidebar />
+          </div>
           <div className="flex-1 flex flex-col">
             <Header />
             <main className="p-4 md:p-8 bg-gray-50 flex-1">

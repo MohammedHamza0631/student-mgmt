@@ -68,7 +68,7 @@ export function AddStudentDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-zinc-600 hover:bg-zinc-900">
+        <Button className="bg-zinc-700 hover:bg-zinc-900">
           <Plus className="mr-2 h-4 w-4" /> Add new Student
         </Button>
       </DialogTrigger>
